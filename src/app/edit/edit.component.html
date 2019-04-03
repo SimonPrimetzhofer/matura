@@ -1,0 +1,45 @@
+<form align="center">
+
+  <h1>Edit ticket</h1>
+  <table border="1" align="center">
+    <tbody>
+      <tr>
+          <td>Description</td>
+          <td><input type="text" name="description" [(ngModel)]="toUpdate.description" /></td>
+      </tr>
+
+      <tr>
+          <td>Priority</td>
+          <td><select (change)="setPriority($event.target.value)">
+              <option *ngFor="let priority of priorityList | async" [selected]="priority.priorityName == toUpdate.priorityName">
+                {{priority.priorityName}}
+              </option>
+            </select></td>
+      </tr>
+
+      <tr>
+          <td>State</td>
+          <td><select (change)="setState($event.target.value)" name="stateName">
+              <option *ngFor="let state of stateList | async" [selected]="state.stateName == toUpdate.stateName">
+                {{state.stateName}}
+              </option>
+            </select></td>
+      </tr>
+
+      <tr>
+          <td>User</td>
+          <td><select (change)="setUser($event.target.value)">
+              <option *ngFor="let user of userList | async" [selected]="user.userName == toUpdate.userName">
+                {{user.userName}}
+              </option>
+            </select></td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><input type="button" (click)="updateTicket();" value="Update" /></td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+</form>

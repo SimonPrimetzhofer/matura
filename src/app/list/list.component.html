@@ -1,0 +1,86 @@
+<form align="center">
+
+  <h1>Add ticket</h1>
+  <table border="1" align="center">
+    <tbody>
+      <tr>
+        <td>Description</td>
+        <td>
+          <input type="text" name="description" [(ngModel)]="toInsert.description" />
+        </td>
+      </tr>
+
+      <tr>
+        <td>Priority</td>
+        <td>
+          <select (change)="setPriority($event.target.value)">
+            <option [selected]="toInsert.description.length == 0">Select Priority</option>
+            <option *ngFor="let priority of priorityList | async">
+              {{priority.priorityName}}
+            </option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>State</td>
+        <td>
+          <select (change)="setState($event.target.value)" name="stateName">
+            <option [selected]="toInsert.description.length == 0">Select State</option>
+            <option *ngFor="let state of stateList | async">
+              {{state.stateName}}
+            </option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>User</td>
+        <td>
+          <select (change)="setUser($event.target.value)">
+            <option [selected]="toInsert.description.length == 0">Select User</option>
+            <option *ngFor="let user of userList | async">
+              {{user.userName}}
+            </option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <input type="button" (click)="addTicket();" value="Add" />
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</form>
+
+<table border="1" align="center">
+  <thead>
+    <th>Description</th>
+    <th>Last change</th>
+    <th>Priority</th>
+    <th>State</th>
+    <th>SubmittedBy</th>
+    <th></th>
+    <th></th>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let ticket of ticketList | async">
+      <td>{{ticket.description}}</td>
+      <td>{{ticket.submittedOn}}</td>
+      <td>{{ticket.priorityName}}</td>
+      <td>{{ticket.stateName}}</td>
+      <td>{{ticket.userName}}</td>
+      <td>
+        <a routerLink="/edit/{{ticket.id}}">Edit</a>
+      </td>
+      <td>
+        <a href="#" (click)="deleteTicket(ticket.id, $event)">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
